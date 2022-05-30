@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook:45f07a14b422
 
 # Install .NET CLI dependencies
 
