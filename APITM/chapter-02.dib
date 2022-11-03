@@ -1,0 +1,3 @@
+#!fsharp
+
+#r "nuget: Plotly.NET.Interactive,  2.0.0"

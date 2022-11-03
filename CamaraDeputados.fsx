@@ -6,7 +6,7 @@ open GraphQL.Client.Http
 open GraphQL.Client.Serializer.Newtonsoft
 open System
 
-let graphQLClient = new GraphQLHttpClient("http://localhost:5078/graphql", new NewtonsoftJsonSerializer());
+let graphQLClient = new GraphQLHttpClient("https://camaradosdeputadosgql-qboe6n5gda-uc.a.run.app/graphql", new NewtonsoftJsonSerializer());
 
 let deputyRequest party state year = new GraphQLRequest (
     $"""
