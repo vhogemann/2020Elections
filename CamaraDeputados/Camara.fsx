@@ -1,7 +1,5 @@
 #r "nuget: GraphQL.Client"
 #r "nuget: GraphQL.Client.Serializer.Newtonsoft"
-#r "nuget: Plotly.NET"
-#r "nuget: Plotly.NET.ImageExport"
 #load "./Model.fsx"
 
 open GraphQL
@@ -44,9 +42,9 @@ type Client(baseUrl:string) =
         let formattedDate = date.ToString("yyyy-MM-dd")
         performQuery query {| date = formattedDate |}
 
-    member _.GetDeputyExpenses(deputyId:int, year: int, month: int): DeputyResponse =
+    member _.GetDeputyExpenses(deputyId:int, year: int, month: Nullable<int>): DeputyResponse =
         let query = """
-            query($deputyId: Int! $month: Int! $year: Int!){
+            query($deputyId: Int! $month: Int $year: Int!){
                 deputies(id: $deputyId) {
                     id
                     name
@@ -69,28 +67,3 @@ type Client(baseUrl:string) =
             year = year
         |}
         performQuery query variables
-
-module Graph =
-    open Plotly.NET
-    open Plotly.NET.ImageExport
-
-    let stackedArea (deputy:Model.Deputy) =
-        deputy.expenses
-        |> Seq.groupBy (fun e -> e.expenseType)
-        |> Seq.map(fun (expenseType, expenses) -> 
-            let dates, values =
-                expenses
-                |> Seq.filter(fun it -> it.documentDate.HasValue)
-                |> Seq.sortBy(fun it -> it.documentDate.Value)
-                |> Seq.map(fun it -> it.documentDate.Value, it.netValue)
-                |> Seq.toArray
-                |> Array.unzip
-            Chart.Line(dates, values, Name=expenseType)
-        )
-        |> Chart.combine
-        |> Chart.withLegendStyle(Orientation = StyleParam.Orientation.Horizontal)
-        |> Chart.withLayoutStyle(Width = 1000, Height = 400)
-
-    let asSVG graph =
-        graph
-        |> Chart.toSVGString( Width = 800, Height = 600)
