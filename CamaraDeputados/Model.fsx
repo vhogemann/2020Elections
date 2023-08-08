@@ -8,7 +8,7 @@ type Expense = {
     expenseType: string
 }
 type Deputy = {
-    id: string
+    id: int
     name: string
     party: string
     state: string
