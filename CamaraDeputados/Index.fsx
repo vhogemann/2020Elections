@@ -1,9 +1,8 @@
-#r "nuget: Elastic.Clients.Elasticsearch, 8.9.1"
+#load "./Dump.fsx"
+#r "nuget: Elastic.Clients.Elasticsearch"
 
 open Elastic.Clients.Elasticsearch
 open System
-open System.Text
-open System.Security.Cryptography
 
 let INDEX_NAME = "deputies"
 let elasticsearch = ElasticsearchClient()
@@ -22,20 +21,20 @@ else
     printfn $"Index {INDEX_NAME} already exists"
 
 //bulk insert expenses
-// for year in YEAR_RANGE do
-//     let expenses = fetchExpensesForYear year
-//     printfn $"Inserting expenses for year {year}"
-//     elasticsearch.BulkAll(expenses, fun bulk ->
-//         bulk
-//             .Index(INDEX_NAME)
-//             .BackOffTime("30s")
-//             .BackOffRetries(2)
-//             .RefreshOnCompleted()
-//             .MaxDegreeOfParallelism(Environment.ProcessorCount)
-//             .Size(100) |> ignore
-//     ).Wait(
-//         TimeSpan.FromMinutes(5), 
-//         fun next -> 
-//             printfn $"Inserting page {next.Page}"
-//             ()
-//     ) |> ignore
+for year in Dump.YEAR_RANGE do
+    let expenses = Dump.fetchExpensesForYear year
+    printfn $"Inserting expenses for year {year}"
+    elasticsearch.BulkAll(expenses, fun bulk ->
+        bulk
+            .Index(INDEX_NAME)
+            .BackOffTime("30s")
+            .BackOffRetries(2)
+            .RefreshOnCompleted()
+            .MaxDegreeOfParallelism(Environment.ProcessorCount)
+            .Size(100) |> ignore
+    ).Wait(
+        TimeSpan.FromMinutes(5), 
+        fun next -> 
+            printfn $"Inserting page {next.Page}"
+            ()
+    ) |> ignore
