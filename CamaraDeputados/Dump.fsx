@@ -5,13 +5,14 @@ open System
 open System.Text
 open System.Security.Cryptography
 
-let YEAR_RANGE = seq { for i in 2023 .. 2023
+let YEAR_RANGE = seq { for i in 2000 .. 2023
  do yield i }
 
 
 open System
 
-let baseUrl = "https://camaradosdeputadosgql-qboe6n5gda-uc.a.run.app/graphql"
+//let baseUrl = "https://camaradosdeputadosgql-qboe6n5gda-uc.a.run.app/graphql"
+let baseUrl = "https://localhost:7043/graphql"
 let camara = Camara.Client(baseUrl)
 
 type DeputyDocument = {
