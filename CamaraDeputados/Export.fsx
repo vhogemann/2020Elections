@@ -5,14 +5,10 @@ open System
 open System.Text
 open System.Security.Cryptography
 
-let YEAR_RANGE = seq { for i in 2000 .. 2023
- do yield i }
-
-
 open System
 
-//let baseUrl = "https://camaradosdeputadosgql-qboe6n5gda-uc.a.run.app/graphql"
-let baseUrl = "https://localhost:7043/graphql"
+let baseUrl = "https://camaradosdeputadosgql-qboe6n5gda-uc.a.run.app/graphql"
+//let baseUrl = "https://localhost:7043/graphql"
 let camara = Camara.Client(baseUrl)
 
 type DeputyDocument = {
@@ -80,13 +76,3 @@ let fetchExpensesForYear (year:int) =
         |> Seq.concat
     )
     |> Seq.concat
-
-// Export to CSV
-// let header = "id,legislatureId,legislatureStart,legislatureEnd,deputyId,deputyName,deputyParty,deputyState,deputyPicture,expenseNetValue,expenseDocumentDate,expenseSupplierCnpjOrCpf,expenseSupplierName,expenseType"
-// let file: IO.StreamWriter = System.IO.File.CreateText("expenses.csv")
-// file.WriteLine(header)
-// for year in YEAR_RANGE do
-//     for expense in fetchExpensesForYear(year) do
-//         file.WriteLine($"{expense.id},{expense.legislatureId},{expense.legislatureStart},{expense.legislatureEnd},{expense.deputyId},{expense.deputyName},{expense.deputyParty},{expense.deputyState},{expense.deputyPicture},{expense.expenseNetValue},{expense.expenseDocumentDate},{expense.expenseSupplierCnpjOrCpf},{expense.expenseSupplierName},{expense.expenseType}")
-//         file.Flush()
-// file.Close()

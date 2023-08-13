@@ -1,4 +1,4 @@
-#load "./Dump.fsx"
+#load "./Export.fsx"
 #r "nuget: Elastic.Clients.Elasticsearch, 7.13.0"
 
 open Elastic.Clients.Elasticsearch
@@ -24,7 +24,7 @@ let lazyCreateIndex (index:string) =
         printfn $"Index {index} already exists"
 
 let year = 2021
-let expenses = Dump.fetchExpensesForYear year
+let expenses = Export.fetchExpensesForYear year
 let indexName = $"{INDEX_NAME}-{year}"
 lazyCreateIndex indexName
 printfn $"Inserting expenses for year {year}"
