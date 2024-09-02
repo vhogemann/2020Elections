@@ -2,8 +2,7 @@
 
 open System
 
-let YEAR_RANGE = seq { for i in 2000 .. 2023
- do yield i }
+let YEAR_RANGE = seq { for i in 2002 .. 2023 do yield i }
 
 // Export to CSV
 let header = "id,legislatureId,legislatureStart,legislatureEnd,deputyId,deputyName,deputyParty,deputyState,deputyPicture,expenseNetValue,expenseDocumentDate,expenseSupplierCnpjOrCpf,expenseSupplierName,expenseType"

@@ -23,7 +23,7 @@ let lazyCreateIndex (index:string) =
     else
         printfn $"Index {index} already exists"
 
-let year = 2021
+let year = 2023
 let expenses = Export.fetchExpensesForYear year
 let indexName = $"{INDEX_NAME}-{year}"
 lazyCreateIndex indexName

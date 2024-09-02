@@ -1,3 +1,5 @@
 .local-chromium/
 .fake
 CamaraDeputados/esdata
+CamaraDeputados/csv/
+BlueSky/.env
